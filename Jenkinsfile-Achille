@@ -22,7 +22,7 @@ pipeline {
     stage('checking images') {
             steps {
                 sh '''
-                docker build -t congo:001 . 
+                docker images
 
                 '''
             }
