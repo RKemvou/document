@@ -2,31 +2,37 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello1') {
+        stage('cleaning enviroment') {
             steps {
-                sh '''
-                mkdir douala
-                touch christ
+                 sh '''
+                docker rm -f $(docker ps -aq) 
+
                 '''
             }
         }
-    stage('Hello2') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-    
-    stage('Hello3') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-    
-    stage('Hello4') {
+    stage('build the image') {
             steps {
                 sh '''
-                free -m
-                uname -r
+                docker build -t congo:001 . 
+
+                '''
+            }
+        }
+    
+    stage('checking images') {
+            steps {
+                sh '''
+                docker build -t congo:001 . 
+
+                '''
+            }
+        }
+    
+    stage('launch container') {
+            steps {
+                sh '''
+                docker run -i --name congolais congo:001 
+
                 '''
             }
         }
